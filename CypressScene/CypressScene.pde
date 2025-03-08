@@ -94,8 +94,7 @@ class SkySplash extends Brush {
   }
 
   public void draw() {
-    float g = 137 + random(0, 70);
-    stroke(252, g, 53);
+    stroke(252, 216, 53);
     for (Point center : points) {
       point(center.x, center.y);
       for (int i = 0; i < 16 * 16; i++) {
@@ -196,6 +195,11 @@ class TreeBrush extends Brush {
 ArrayList<Brush> brushes;
 Brush currentBrush;
 
+Brush wheatBrush;
+Brush treeBrush;
+Brush flowerBrush;
+Brush skySplash;
+
 int HEIGHT = 350;
 int WIDTH = 350;
 
@@ -203,16 +207,26 @@ void setup() {
   size(350, 350);
   currentBrush = null;
   brushes = new ArrayList<Brush>();
-  brushes.add(new WheatBrush(new MenuPosition(new Point(0, HEIGHT - 20), new Point(20, HEIGHT))));
-  brushes.add(new TreeBrush(new MenuPosition(new Point(50, HEIGHT - 20), new Point(70, HEIGHT))));
-  brushes.add(new FlowerBrush(new MenuPosition(new Point(100, HEIGHT - 20), new Point(120, HEIGHT))));
-  brushes.add(new SkySplash(new MenuPosition(new Point(150, HEIGHT - 20), new Point(170, HEIGHT))));
+  wheatBrush = new WheatBrush(new MenuPosition(new Point(0, HEIGHT - 20), new Point(20, HEIGHT)));
+  brushes.add(wheatBrush);
+  treeBrush = new TreeBrush(new MenuPosition(new Point(50, HEIGHT - 20), new Point(70, HEIGHT)));
+  brushes.add(treeBrush);
+  flowerBrush = new FlowerBrush(new MenuPosition(new Point(100, HEIGHT - 20), new Point(120, HEIGHT)));
+  brushes.add(flowerBrush);
+  skySplash = new SkySplash(new MenuPosition(new Point(150, HEIGHT - 20), new Point(170, HEIGHT)));
+  brushes.add(skySplash);
+  for (int x = 16; x < WIDTH; x = x + 32) {
+    for (int y = 16; y < (HEIGHT * .75); y = y + 32) {
+      skySplash.points.add(new Point(x, y));
+    }
+  }
 }
 
 void draw() {
   randomSeed(16);
 
   drawSkyBackground();
+
  
   if (mousePressed && mouseY < HEIGHT - 20 && currentBrush != null) {
     currentBrush.points.add(new Point(mouseX, mouseY));
