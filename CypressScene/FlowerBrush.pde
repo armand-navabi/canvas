@@ -3,10 +3,8 @@ class FlowerBrush extends Brush {
     super(mp);
   }
   
-  public void draw() {
-    for (Point p : points) {
-      drawFlower(p.x, p.y);
-    }
+  public void draw(int x, int y) {
+    drawFlower(1.0 * x, 1.0 * y);
   }
   
   void drawFlower(float rootX, float rootY) {

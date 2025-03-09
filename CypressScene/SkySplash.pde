@@ -3,15 +3,13 @@ class SkySplash extends Brush {
     super(mp);
   }
 
-  public void draw() {
+  public void draw(int x, int y) {
     stroke(252, 216, 53);
-    for (Point center : points) {
-      point(center.x, center.y);
-      setSkyColor(center.y + 36);
-      for (int i = 0; i < 16 * 16; i++) {
-        Point p = randomPointInCircle(new Point(center.x, center.y), 16);
-        point(p.x, p.y);
-      }
+    point(x, y);
+    setSkyColor(y + 36);
+    for (int i = 0; i < 16 * 16; i++) {
+      Point p = randomPointInCircle(new Point(x, y), 16);
+      point(p.x, p.y);
     }
   }
 

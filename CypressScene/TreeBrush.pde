@@ -3,15 +3,14 @@ class TreeBrush extends Brush {
     super(mp);
   }
   
-  public void draw() {
-    for (Point p : points) {
-      float startX = p.x;
-      float startY = p.y;
-      float initialLen =  4;
-      float angle = random(20);
-      int maxDepth = 2;  
-      drawFractal(startX, startY, initialLen, angle, maxDepth);
-    }
+  public void draw(int x, int y) {
+    float startX = 1.0 * x;
+    float startY = 1.0 * y;
+    float initialLen =  4;
+    float angle = random(20);
+    int maxDepth = 2;
+    drawFractal(startX, startY, initialLen, angle, maxDepth);
+
   }
 
   void drawFractal(float startX, float startY, float len, float angle, int depth) {

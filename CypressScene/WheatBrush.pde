@@ -3,10 +3,8 @@ class WheatBrush extends Brush {
     super(mp);
   }
   
-  public void draw() {
-    for (Point p : points) {
-      drawGrass(p.x, p.y);
-    }
+  public void draw(int x, int y) {
+    drawGrass(1.0 * x, 1.0 * y);
   }
   
   void drawGrass(float x, float y) {

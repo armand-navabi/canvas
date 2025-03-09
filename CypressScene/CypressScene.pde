@@ -9,8 +9,12 @@ Brush skySplash;
 int HEIGHT = 350;
 int WIDTH = 350;
 
+Brush[][] points = new Brush[HEIGHT][WIDTH];
+
 void setup() {
   size(350, 350);
+
+  // Declare brushes, with none currently selected (currentBrush = null)
   currentBrush = null;
   brushes = new ArrayList<Brush>();
   wheatBrush = new WheatBrush(new MenuPosition(new Point(0, HEIGHT - 20), new Point(20, HEIGHT)));
@@ -21,13 +25,6 @@ void setup() {
   brushes.add(flowerBrush);
   skySplash = new SkySplash(new MenuPosition(new Point(150, HEIGHT - 20), new Point(170, HEIGHT)));
   brushes.add(skySplash);
-  for (int x = 0; x < WIDTH; x = x + (WIDTH / 16)) {
-    for (int y = 0; y < (HEIGHT * .65); y = y + (WIDTH / 16)) {
-      float probability = 1.0 - (y / (HEIGHT * .65));
-      if (random(0, 1) < probability)
-        skySplash.points.add(new Point(x, y));
-    }
-  }
 }
 
 void draw() {
@@ -35,12 +32,18 @@ void draw() {
 
   drawSkyBackground();
  
-  if (mousePressed && mouseY < HEIGHT - 20 && currentBrush != null) {
-    currentBrush.points.add(new Point(mouseX, mouseY));
+  if (currentBrush != null && mousePressed &&
+      mouseX > 1 && mouseX < WIDTH &&
+      mouseY > 1 && mouseY < HEIGHT - 20) {
+    points[mouseX][mouseY] = currentBrush;
   }
-  
-  for (Brush brush : brushes) {
-    brush.draw();
+
+  for (int x = 0; x < points.length; x++) {
+    for (int y = 0; y < points[0].length; y++) {
+      if (points[x][y] != null) {
+        points[x][y].draw(x, y);
+      }
+    }
   }
 
   // Draw the sun
@@ -65,13 +68,8 @@ void setSkyColor(int y) {
 
 void drawSkyBackground() {
   strokeWeight(4);
-  int r = 250;
-  int g = 241;
-  int b = 157;
   for (int y = 0; y < (HEIGHT * .75); y = y + 4) {
     setSkyColor(y);
     line(0, y, WIDTH, y);
-    g = g - 2;
-    b = b - 4;
   }
 }
