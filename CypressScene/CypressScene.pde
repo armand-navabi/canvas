@@ -97,6 +97,7 @@ class SkySplash extends Brush {
     stroke(252, 216, 53);
     for (Point center : points) {
       point(center.x, center.y);
+      setSkyColor(center.y + 36);
       for (int i = 0; i < 16 * 16; i++) {
         Point p = randomPointInCircle(new Point(center.x, center.y), 16);
         point(p.x, p.y);
@@ -215,9 +216,11 @@ void setup() {
   brushes.add(flowerBrush);
   skySplash = new SkySplash(new MenuPosition(new Point(150, HEIGHT - 20), new Point(170, HEIGHT)));
   brushes.add(skySplash);
-  for (int x = 16; x < WIDTH; x = x + 32) {
-    for (int y = 16; y < (HEIGHT * .75); y = y + 32) {
-      skySplash.points.add(new Point(x, y));
+  for (int x = 0; x < WIDTH; x = x + (WIDTH / 16)) {
+    for (int y = 0; y < (HEIGHT * .65); y = y + (WIDTH / 16)) {
+      float probability = 1.0 - (y / (HEIGHT * .65));
+      if (random(0, 1) < probability)
+        skySplash.points.add(new Point(x, y));
     }
   }
 }
@@ -226,7 +229,6 @@ void draw() {
   randomSeed(16);
 
   drawSkyBackground();
-
  
   if (mousePressed && mouseY < HEIGHT - 20 && currentBrush != null) {
     currentBrush.points.add(new Point(mouseX, mouseY));
@@ -239,7 +241,7 @@ void draw() {
   // Draw the sun
   stroke(250, 241, 157);
   fill(245, 230, 106);
-  ellipse((WIDTH / 2.0), 140, 120, 120);
+  ellipse((WIDTH / 2.0), 140, 100, 100);
 }
 
 void mouseClicked() {
@@ -252,14 +254,18 @@ void mouseClicked() {
   }
 }
 
+void setSkyColor(int y) {
+  stroke(250, 240 - (y * .5), 160 - y);
+}
+
 void drawSkyBackground() {
   strokeWeight(4);
   int r = 250;
   int g = 241;
   int b = 157;
-  for (int i = 0; i < (HEIGHT * .75); i = i + 4) {
-    stroke(r, g, b);
-    line(0, i, WIDTH, i);
+  for (int y = 0; y < (HEIGHT * .75); y = y + 4) {
+    setSkyColor(y);
+    line(0, y, WIDTH, y);
     g = g - 2;
     b = b - 4;
   }
