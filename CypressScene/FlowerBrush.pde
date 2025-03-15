@@ -8,20 +8,23 @@ class FlowerBrush extends Brush {
   }
   
   void drawFlower(float rootX, float rootY) {
-    stroke(62, 102, 56);
-    strokeWeight(1);
-    //line(rootX, rootY, rootX, rootY + 16);
+    drawFlowerHelper(rootX, rootY);
+  }
 
-    float x = rootX;
-    float y = rootY;
-    beginShape();
-    curveVertex(x, y);
-    curveVertex(x, y);
-    curveVertex(x+random(-3, 3), y-4);
-    curveVertex(x+random(-6, 6), y-8);
-    curveVertex(x+10, y+16);
-    curveVertex(x+10, y+16);
-    endShape();
-    
+  void drawFlowerHelper(float rootX, float rootY) {
+    stroke(100, 147, 92);
+    stroke(random(62, 100), random(102, 147), random(56, 92));
+    strokeWeight(4);
+    for (int i = -2; i < 4; i++) {
+      float x = rootX;
+      float y = rootY;
+      beginShape();
+      curveVertex(x, y);
+      curveVertex(x, y);
+      curveVertex(x + i, y-8);
+      curveVertex(x + i -1, y-16);
+      curveVertex(x + i -1, y-16);
+      endShape();
+    }
   }
 }
