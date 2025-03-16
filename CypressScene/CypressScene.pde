@@ -4,7 +4,9 @@ Brush currentBrush;
 Brush wheatBrush;
 Brush treeBrush;
 Brush flowerBrush;
+Brush flowerBrush2;
 Brush skySplash;
+Brush eraseBrush;
 
 int HEIGHT = 350;
 int WIDTH = 350;
@@ -27,6 +29,8 @@ void setup() {
   brushes.add(skySplash);
   flowerBrush = new FlowerBrush(new MenuPosition(new Point(160, HEIGHT - 20), new Point(180, HEIGHT)));
   brushes.add(flowerBrush);
+  eraseBrush = new EraseBrush(new MenuPosition(new Point(180, HEIGHT - 20), new Point (200, HEIGHT)));
+  brushes.add(eraseBrush);
 }
 
 void draw() {
@@ -37,7 +41,12 @@ void draw() {
   if (currentBrush != null && mousePressed &&
       mouseX > 1 && mouseX < WIDTH &&
       mouseY > 1 && mouseY < HEIGHT - 20) {
-    points[mouseX][mouseY] = currentBrush;
+        if (currentBrush == eraseBrush) {
+          eraseAreaAround(mouseX, mouseY);
+          redraw();
+        } else {
+          points[mouseX][mouseY] = currentBrush;
+        }
   }
 
   for (int x = 0; x < points.length; x++) {
@@ -54,11 +63,23 @@ void draw() {
   ellipse((WIDTH / 2.0), 140, 100, 100);
 }
 
+void eraseAreaAround(int x, int y) {
+  int minX = x - 10 > 0 ? x - 10 : 0;
+  int maxX = x + 10 < WIDTH ? x + 10 : WIDTH - 1;
+  int minY = y - 10 > 0 ? y - 10 : 0;
+  int maxY = y + 10 < WIDTH ? y + 10 : WIDTH - 1;
+  for (int i = minX; i < maxX; i++) {
+    for (int j = minY; j < maxY; j++) {
+      points[i][j] = null;
+    }
+  }
+}
+
 void mouseClicked() {
   for (Brush b : brushes) {
     if (b.isInMenu(mouseX, mouseY)) {
       currentBrush = b;
-      b.selectMenu();
+      b.selectMenu(); // a visiual alert of click
       return;
     }
   }
