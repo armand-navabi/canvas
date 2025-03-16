@@ -19,12 +19,14 @@ void setup() {
   brushes = new ArrayList<Brush>();
   wheatBrush = new WheatBrush(new MenuPosition(new Point(0, HEIGHT - 20), new Point(20, HEIGHT)));
   brushes.add(wheatBrush);
-  treeBrush = new TreeBrush(new MenuPosition(new Point(50, HEIGHT - 20), new Point(70, HEIGHT)));
+  treeBrush = new TreeBrush(new MenuPosition(new Point(40, HEIGHT - 20), new Point(60, HEIGHT)));
   brushes.add(treeBrush);
-  flowerBrush = new FlowerBrush(new MenuPosition(new Point(100, HEIGHT - 20), new Point(120, HEIGHT)));
-  brushes.add(flowerBrush);
-  skySplash = new SkySplash(new MenuPosition(new Point(150, HEIGHT - 20), new Point(170, HEIGHT)));
+  flowerBrush2 = new FlowerBrush2(new MenuPosition(new Point(80, HEIGHT - 20), new Point(100, HEIGHT)));
+  brushes.add(flowerBrush2);
+  skySplash = new SkySplash(new MenuPosition(new Point(120, HEIGHT - 20), new Point(140, HEIGHT)));
   brushes.add(skySplash);
+  flowerBrush = new FlowerBrush(new MenuPosition(new Point(160, HEIGHT - 20), new Point(180, HEIGHT)));
+  brushes.add(flowerBrush);
 }
 
 void draw() {
